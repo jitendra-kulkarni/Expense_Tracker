@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Edit Expenses</title>
+</head>
+
+<body>
+
+    <div class="container shadow mt-5 p-4">
+
+        <div class="card p-4 mb-4">
+            <h2 class="text-center text-primary">Edit Expenses
+
+            </h2>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <input type="text" name="title" value="{{ expense.title }}" class="form-control">
+
+                <br><br>
+
+                <input type="number" name="amount" value="{{ expense.amount }}" class="form-control">
+
+                <br><br>
+
+                <select name="category" class="form-control">
+
+                    <option value="Food" {% if expense.category == "Food" %}selected{% endif %}>
+                        Food
+                    </option>
+
+                    <option value="Travel" {% if expense.category == "Travel" %}selected{% endif %}>
+                        Travel
+                    </option>
+
+                    <option value="Transport" {% if expense.category == "Transport" %}selected{% endif %}>
+                        Transport
+                    </option>
+
+                    <option value="Entertainment" {% if expense.category == "Entertainment" %}selected{% endif %}>
+                        Entertainment
+                    </option>
+
+                    <option value="Bills" {% if expense.category == "Bills" %}selected{% endif %}>
+                        Bills
+                    </option>
+
+                    <option value="Health" {% if expense.category == "Health" %}selected{% endif %}>
+                        Health
+                    </option>
+
+                    <option value="Other" {% if expense.category == "Other" %}selected{% endif %}>
+                        Other
+                    </option>
+
+                </select>
+                
+                <br><br>
+
+                <input type="date" name="date" value="{{ expense.date|date:'Y-m-d' }}" class="form-control">
+
+                <br>
+
+                <button type="submit" class="btn btn-success text-center">Update</button>
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
