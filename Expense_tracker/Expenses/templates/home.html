@@ -16,7 +16,10 @@
         </h1>
 
         <div class="card shadow p-4">
-            <h4 class="text-center">Add New Expenses</h4> <h4 class="text-left">Total Transaction: {{ total_transaction }}</h4> <h4 class="text-right">Total Expense :&#8377;{{ total_expense }}</h4>
+            <h4 class="text-center">Add New Expenses</h4>
+            <h4 class="text-left">Total Transaction: {{ total_transaction }}</h4>
+            <h4 class="text-right">Total Expense :&#8377;{{ total_expense }}</h4>
+            <h4>Total Expense This Month : &#8377; {{ this_month_total }}</h4>
 
             <br>
 
@@ -34,7 +37,7 @@
 
 
                 <div class="mb-3">
-                    <label class="form-lable">Category</label>
+
 
                     <select name="category" class="form-select">
                         <option value=""> Select Category </option>
@@ -51,9 +54,9 @@
 
                     <br>
 
-                     Date : <input type="date" name="date">
+                    Date : <input type="date" name="date">
 
-                <br><br>
+                    <br><br>
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary">
@@ -62,43 +65,99 @@
                     </div>
                 </div>
 
-                <table class="table table-striped mt-4">
-                    <thead>
-
-                        <tr>
-                            <th>Title</th>
-                            <th>Amount</th>
-                            <th>Category</th>
-                            <th>Date</th>
-                            <th>Actions</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-                        {% for expense in Expenses %}
-
-                        <tr>
-                            <td>{{ expense.title }}</td>
-                            <td>&#8377 {{ expense.amount }}</td>
-                            <td>{{ expense.category }}</td>
-                            <td>{{ expense.date}}</td>
-
-                            <td>
-                                <a href="/edit_expense/{{ expense.id }}" class="btn btn-warning btn-sm">
-                                    Update
-                                </a>
-
-                                <a href="/delete/{{ expense.id }}" class="btn btn-danger btn-sm"> 
-                                    Delete 
-                                </a>
-                            </td>
-                        </tr>
-
-                        {% endfor %}
-                    </tbody>
-                </table>
             </form>
+
+            <br>
+
+            <form method="GET">
+                <select name="month">
+
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+
+                </select>
+
+                <select name="year">
+
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                    <option value="2031">2031</option>
+                    <option value="2032">2032</option>
+                    <option value="2033">2033</option>
+                    <option value="2034">2034</option>
+                    <option value="2035">2035</option>
+
+                </select>
+
+                <button type="submit">
+                    Filter
+                </button>
+            </form>
+
+            <br>
+
+            <form method="GET" class="d-flex gap-2">
+
+                <input type="search" name="search" class="form-control" placeholder="Search Expenses">
+
+                <button type="submit" class="btn btn-primary">
+                    Search
+                </button>
+
+            </form>
+
+            <br>
+
+            <table class="table table-striped mt-4">
+
+                <thead>
+
+                    <tr>
+                        <th>Title</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    {% for expense in Expenses %}
+
+                    <tr>
+                        <td>{{ expense.title }}</td>
+                        <td>&#8377 {{ expense.amount }}</td>
+                        <td>{{ expense.category }}</td>
+                        <td>{{ expense.date}}</td>
+
+                        <td>
+                            <a href="/edit_expense/{{ expense.id }}" class="btn btn-warning btn-sm">
+                                Update
+                            </a>
+
+                            <a href="/delete/{{ expense.id }}" class="btn btn-danger btn-sm">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 

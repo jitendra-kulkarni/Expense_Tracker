@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Sum
+from datetime import date
+today = date.today()
 
 # Create your views here.
 @login_required(login_url='/login/')
@@ -27,12 +29,39 @@ def home(request):
         return redirect('/')
     
     expenses = Expense.objects.filter(
-        user=request.user
+        user=request.user,
+    )
+
+    search = request.GET.get("search")
+
+    if search:
+        expenses=expenses.filter(
+            title__icontains = search
+        )
+
+    month=request.GET.get("month")
+    year=request.GET.get("year")
+
+    if month and year:
+        expenses = expenses.filter(
+            date__month = month,
+            date__year = year
+        )
+    
+    this_month_expenses = Expense.objects.filter(
+        user=request.user,
+        date__month = today.month,
+        date__year = today.year
     )
 
     total_transactions = expenses.count()
 
     total_expense = expenses.aggregate(
+        Sum("amount")
+        
+    )["amount__sum"] or 0
+
+    this_month_total = this_month_expenses.aggregate(
         Sum("amount")
     )["amount__sum"] or 0
 
@@ -40,6 +69,7 @@ def home(request):
         "Expenses":expenses,
         "total_transaction":total_transactions,
         "total_expense":total_expense,
+        "this_month_total":this_month_total,
     }
 
     return render(request, "home.html",context) 
