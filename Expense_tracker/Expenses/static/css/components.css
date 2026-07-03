@@ -1,0 +1,510 @@
+.modern-input{
+    height:55px;
+    border-radius:14px;
+    border:1px solid #dbe4ee;
+    padding:12px 18px;
+    font-size:15px;
+    transition:.3s;
+    background:#fafcff;
+}
+
+.modern-input:focus{
+    border-color:#7c3aed;
+    box-shadow:0 0 0 .20rem rgba(124,58,237,.15);
+    background:white;
+}
+
+.form-select option{
+    font-size:25px;
+}
+
+.add-btn{
+    background:linear-gradient(135deg,#7c3aed,#3b82f6);
+    color:#fff;
+    border:none;
+    border-radius:14px;
+    padding:14px 32px;
+    font-weight:600;
+    font-size:15px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    transition:all .3s ease;
+    box-shadow:0 10px 25px rgba(124,58,237,.25);
+}
+
+.add-btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px rgba(59,130,246,.30);
+    color:white;
+}
+
+.apply-btn{
+    background:#7c3aed;
+    color:white;
+    border:none;
+    height:55px;
+    border-radius:14px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.apply-btn:hover{
+    background:#6d28d9;
+    color:white;
+    transform:translateY(-2px);
+}
+
+.action-buttons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+}
+
+.edit-btn,
+.delete-btn{
+    width:48px;
+    height:48px;
+    border-radius:16px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-decoration:none;
+    transition:.3s ease;
+    font-size:18px;
+}
+
+.btn-warning,
+.btn-danger{
+    border:none;
+    border-radius:12px;
+    padding:10px 18px;
+    min-width:95px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-warning:hover,
+.btn-danger:hover{
+    transform:translateY(-2px);
+}
+
+.table-card{
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+.table{
+    margin:0;
+}
+
+.table thead{
+    background:#f8fafc;
+}
+
+.table thead th{
+    border:none;
+    color:#475569;
+    font-size:15px;
+    font-weight:600;
+    padding:18px;
+}
+
+.table tbody td{
+    padding:18px;
+    border-top:1px solid #edf2f7;
+    vertical-align:middle;
+}
+
+.table tbody tr{
+    transition:.25s;
+}
+
+.table tbody tr:hover{
+    background:#f8fbff;
+}
+
+.badge{
+    padding:8px 15px;
+    border-radius:30px;
+    font-weight:500;
+    font-size:13px;
+}
+
+.messages-container{
+    margin-bottom:25px;
+}
+
+.custom-alert{
+    border:none;
+    border-radius:16px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    font-weight:500;
+
+}
+
+.dashboard-topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.topbar-left{
+    display:flex;
+    gap:15px;
+}
+
+.topbar-right{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#7c3aed,#3b82f6);
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:700;
+    font-size:18px;
+}
+
+.username{
+    font-weight:600;
+    color:#1e293b;
+}
+
+.budget-btn{
+    padding:12px 20px;
+    border-radius:12px;
+    text-decoration:none;
+    background:#ffffff;
+    color:#1e293b;
+    border:1px solid #dbe4ee;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:.3s;
+}
+
+.budget-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.logout-btn{
+    padding:12px 22px;
+    border-radius:12px;
+    text-decoration:none;
+    color:white;
+    background:#ef4444;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    transition:.3s;
+}
+
+.logout-btn:hover{
+    background:#dc2626;
+}
+
+/* ======================================
+   Monthly Expense Trend Card
+====================================== */
+
+.chart-card{
+
+    padding:35px;
+
+    margin-top:30px;
+
+}
+
+.chart-layout{
+
+    display:grid;
+
+    grid-template-columns:280px 1fr;
+
+    gap:40px;
+
+    align-items:center;
+
+}
+
+.chart-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+.chart-info h2{
+
+    font-size:38px;
+
+    font-weight:700;
+
+    color:#172b4d;
+
+    margin-bottom:10px;
+
+    line-height:1.2;
+
+}
+
+.chart-info p{
+
+    color:#64748b;
+
+    font-size:16px;
+
+    line-height:1.6;
+
+    margin-bottom:35px;
+
+}
+
+.chart-total{
+
+    font-size:42px;
+
+    font-weight:700;
+
+    background:linear-gradient(135deg,#7c3aed,#3b82f6);
+
+    -webkit-background-clip:text;
+
+    -webkit-text-fill-color:transparent;
+
+    margin-bottom:5px;
+
+}
+
+.chart-info small{
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+.chart-area{
+
+    position:relative;
+
+    width:100%;
+
+    height:360px;
+
+}
+
+.chart-area canvas{
+
+    width:100% !important;
+
+    height:360px !important;
+
+}
+
+/* ==========================
+        Pagination
+========================== */
+
+.pagination-wrapper{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-top:35px;
+
+}
+
+.page-btn{
+
+    padding:10px 18px;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    background:#ffffff;
+
+    border:1px solid #dbe4ee;
+
+    color:#172b4d;
+
+    transition:.3s;
+
+}
+
+.page-btn:hover{
+
+    background:linear-gradient(135deg,#7c3aed,#3b82f6);
+
+    color:#fff;
+
+    border-color:transparent;
+
+}
+
+.page-info{
+
+    font-weight:600;
+
+    color:#64748b;
+
+}
+
+/* ===============================
+        Profile Dropdown
+================================ */
+
+.profile-dropdown{
+
+    position:relative;
+
+}
+
+.profile-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    border:none;
+
+    background:white;
+
+    padding:10px 16px;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.profile-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.avatar{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#7c3aed,#3b82f6);
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:18px;
+
+    font-weight:700;
+
+}
+
+.profile-btn span{
+
+    font-weight:600;
+
+    color:#172b4d;
+
+}
+
+.dropdown-menu-custom{
+
+    position:absolute;
+
+    top:110%;
+
+    right:0;
+
+    width:180px;
+
+    background:white;
+
+    border-radius:14px;
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+    display:none;
+
+    overflow:hidden;
+
+    z-index:1000;
+
+}
+
+.dropdown-menu-custom.show{
+
+    display:block;
+
+}
+
+.logout-link{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px 18px;
+
+    color:#dc3545;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.logout-link:hover{
+
+    background:#fff5f5;
+
+}

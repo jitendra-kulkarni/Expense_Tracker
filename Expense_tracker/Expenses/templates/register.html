@@ -1,35 +1,126 @@
+{% load static %}
+{% load socialaccount %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Page</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
 </head>
 
 <body>
 
-    <div class="card shadow p-4">
-        <h2 class="text-center mb-4">Register</h2>
+    <div class="background-shape"></div>
+    <div class="background-shape2"></div>
 
-        <form method="POST">
+    <div class="auth-container">
+        {% include 'includes/messages.html' %}
 
-            {% csrf_token %}
+        <div class="auth-card">
 
-            <input type="text" name="username" placeholder="Enter Username" class="form-control">
+            <!-- Logo -->
 
-            <br>
+            <div class="auth-header">
 
-            ,<input type="password" name="password" placeholder="Enter Password" class="formcontrol">
+                <i class="bi bi-wallet2 auth-logo"></i>
 
-            <br>
+                <h1 class="main-title">
+                    Expense Tracker
+                </h1>
 
-            <button class="btn btn-success"> Register </button>
-        </form>
+                <p class="subtitle">
+                    Track your daily spending with ease
+                </p>
 
-        <a href="/login/">Already have an Account ??</a>
+            </div>
+
+            <!-- Title -->
+
+            <div class="auth-title">
+
+                <h2>Create Account</h2>
+
+                <p>Create your account to start tracking expenses</p>
+
+            </div>
+
+            <!-- Register Form -->
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="form-group">
+
+                    <label>Username</label>
+
+                    <input type="text" name="username" class="modern-input mb-3" placeholder="Enter username" required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <input type="password" name="password" class="modern-input mb-4" placeholder="Enter password"
+                        required>
+
+                </div>
+
+                <button type="submit" class="add-btn auth-btn">
+
+                    <i class="bi bi-person-plus"></i>
+
+                    Create Account
+
+                </button>
+
+            </form>
+
+            <!-- Divider -->
+
+            <div class="auth-divider">
+
+                <span>OR</span>
+
+            </div>
+
+            <!-- Google -->
+
+            <a href="{% provider_login_url 'google' process='login' %}" class="google-btn">
+                <i class="bi bi-google"></i>
+                Continue with Google
+            </a>
+
+            <!-- Login -->
+
+            <div class="auth-footer">
+
+                Already have an account?
+
+                <a href="{% url 'login_page' %}">
+                    Login
+                </a>
+
+            </div>
+
+        </div>
 
     </div>
+
 </body>
 
 </html>

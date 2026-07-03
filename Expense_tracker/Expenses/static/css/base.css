@@ -1,0 +1,87 @@
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#eef2ff,#f8fafc);
+    min-height:100vh;
+    color:#1e293b;
+    position:relative;
+    overflow-x:hidden;
+}
+
+.background-shape{
+    width:350px;
+    height:350px;
+    background:#7c3aed;
+    position:absolute;
+    top:-120px;
+    left:-120px;
+    opacity:.12;
+    border-radius:50%;
+    filter:blur(60px);
+}
+
+.background-shape2{
+    width:300px;
+    height:300px;
+    background:#06b6d4;
+    position:absolute;
+    bottom:-120px;
+    right:-120px;
+    opacity:.12;
+    border-radius:50%;
+    filter:blur(60px);
+}
+
+.main-title{
+    font-size:3rem;
+    font-weight:700;
+    color:#1f2937;
+}
+
+.subtitle{
+    color:#64748b;
+    font-size:18px;
+}
+
+.section-title{
+    font-size:28px;
+    font-weight:600;
+}
+
+label{
+    font-weight:600;
+    color:#334155;
+    margin-bottom:8px;
+    display:block;
+}
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+.main-card,
+.search-card,
+.table-card,
+.stat-card,
+.auth-card{
+    animation:fadeUp .6s ease;
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}

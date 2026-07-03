@@ -1,0 +1,88 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Update Budget</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+</head>
+
+<body>
+
+<div class="background-shape"></div>
+<div class="background-shape2"></div>
+
+<div class="container py-5">
+    {% include 'includes/messages.html' %}
+
+    <div class="main-card mx-auto" style="max-width:600px;">
+
+        <div class="text-center mb-5">
+
+            <i class="bi bi-wallet2 display-3 text-primary"></i>
+
+            <h2 class="section-title mt-3">
+                Update Monthly Budget
+            </h2>
+
+            <p class="subtitle">
+                Set your spending limit for this month.
+            </p>
+
+        </div>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label class="form-label">
+                Monthly Budget
+            </label>
+
+            <input
+                type="number"
+                name="amount"
+                class="form-control modern-input"
+                placeholder="Enter Monthly Budget"
+                value="{% if budget %}{{ budget.amount }}{% endif %}"
+                required
+            >
+
+            <div class="d-flex justify-content-between mt-5">
+
+                <a href="/" class="btn btn-light px-4">
+                    Cancel
+                </a>
+
+                <button type="submit" class="add-btn">
+
+                    <i class="bi bi-check-circle me-2"></i>
+
+                    Save Budget
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,166 +1,757 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Expense Tracker</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Expense tracker</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
 </head>
 
 <body>
 
-    <div class="container mt-5">
-        <h1 class="text-center mb-5">
-            Expence Tracker
-        </h1>
+    <div class="background-shape"></div>
+    <div class="background-shape2"></div>
 
-        <div class="card shadow p-4">
-            <h4 class="text-center">Add New Expenses</h4>
-            <h4 class="text-left">Total Transaction: {{ total_transaction }}</h4>
-            <h4 class="text-right">Total Expense :&#8377;{{ total_expense }}</h4>
-            <h4>Total Expense This Month : &#8377; {{ this_month_total }}</h4>
+    <div class="container py-5">
 
-            <br>
+        <!-- ================= HEADER ================= -->
+
+        <div class="text-center mb-5">
+
+            <h1 class="main-title">
+                <i class="bi bi-wallet2"></i>
+                Expense Tracker
+            </h1>
+
+            <div class="title-line"></div>
+
+            <p class="subtitle">
+                Track your daily spending with ease
+            </p>
+
+        </div>
+
+        <!-- ================= MAIN CARD ================= -->
+
+        <div class="main-card">
+            {% include 'includes/messages.html' %}
+
+
+            <div class="dashboard-topbar">
+
+                <!-- LEFT -->
+                <div class="topbar-left">
+
+                    <a href="{% url 'update_budget' %}" class="budget-btn secondary">
+                        <i class="bi bi-pencil-square"></i>
+                        Update Budget
+                    </a>
+
+                </div>
+
+                <!-- RIGHT -->
+                <div class="topbar-right">
+
+                    <div class="profile-dropdown">
+
+                        <button class="profile-btn" id="profileBtn">
+
+                            <div class="avatar">
+
+                                {{ request.user.username|first|upper }}
+
+                            </div>
+
+                            <span>{{ request.user.username }}</span>
+
+                            <i class="bi bi-chevron-down"></i>
+
+                        </button>
+
+                        <div class="dropdown-menu-custom" id="profileMenu">
+
+                            <a href="{% url 'logout' %}" class="logout-link">
+
+                                <i class="bi bi-box-arrow-right"></i>
+
+                                Logout
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= DASHBOARD ================= -->
+
+            <div class="row g-4 mb-5">
+
+                <!-- Card 1 -->
+
+                <div class="col-md-4">
+
+                    <div class="stat-card">
+
+                        <div class="icon-circle purple">
+                            <i class="bi bi-wallet2"></i>
+                        </div>
+
+                        <div>
+
+                            <h6>Monthly Budget</h6>
+
+                            <h2>₹ {{ budget_amount }}</h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Card 2 -->
+
+                <div class="col-md-4">
+
+                    <div class="stat-card">
+
+                        <div class="icon-circle green">
+                            <i class="bi bi-cash-stack"></i>
+                        </div>
+
+                        <div>
+
+                            <h6>Spent</h6>
+
+                            <h2>₹ {{ this_month_total }}</h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Card 3 -->
+
+                <div class="col-md-4">
+
+                    <div class="stat-card">
+
+                        <div class="icon-circle blue">
+                            <i class="bi bi-piggy-bank"></i>
+                        </div>
+
+                        <div>
+
+                            <h6>Remaining</h6>
+
+                            <h2>₹ {{ remaining_budget }}</h2>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= PROGRESS ================= -->
+
+            <div class="mb-5">
+
+                <div class="d-flex justify-content-between mb-2">
+
+                    <strong>Monthly Budget Usage</strong>
+
+                    <strong>{{ spent_percentage|floatformat:0 }}%</strong>
+
+                </div>
+
+                <div class="progress" style="height:12px;border-radius:20px;">
+
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ spent_percentage }}%;">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <h3 class="section-title mt-5 mb-3 text-center">
+                Add New Expense
+            </h3>
+
+            <div class="section-line mb-4"></div>
+
+            <!-- ================= EXPENSE FORM ================= -->
 
             <form method="POST">
 
                 {% csrf_token %}
 
-                <input type="text" name="title" placeholder="Expenses Name" class="form-control">
+                <div class="row g-4">
 
-                <br><br>
+                    <!-- Expense Name -->
 
-                <input type="number" name="amount" placeholder="Add Amount" class="form-control" step="0.01">
+                    <div class="col-md-6">
 
-                <br><br>
+                        <label class="form-label">
+                            Expense Name
+                        </label>
 
+                        <input type="text" name="title" class="form-control modern-input"
+                            placeholder="Enter expense name" required>
 
-                <div class="mb-3">
-
-
-                    <select name="category" class="form-select">
-                        <option value=""> Select Category </option>
-
-                        <option value="Food">Food</option>
-                        <option value="Travel">Travel</option>
-                        <option value="Transport">Transport</option>
-                        <option value="Shopping">Shopping</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Bills">Bills</option>
-                        <option value="Health">Health</option>
-                        <option value="Other">Other</option>
-                    </select>
-
-                    <br>
-
-                    Date : <input type="date" name="date">
-
-                    <br><br>
-
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">
-                            Add Expenses
-                        </button>
                     </div>
+
+                    <!-- Amount -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Amount
+                        </label>
+
+                        <input type="number" name="amount" class="form-control modern-input" placeholder="₹ 0.00"
+                            required>
+
+                    </div>
+
+                    <!-- Category -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Category
+                        </label>
+
+                        <select name="category" class="form-select modern-input" required>
+
+                            <option value="">Select Category</option>
+
+                            <option value="Food">Food</option>
+
+                            <option value="Travel">Travel</option>
+
+                            <option value="Transport">Transport</option>
+
+                            <option value="Shopping">Shopping</option>
+
+                            <option value="Entertainment">Entertainment</option>
+
+                            <option value="Bills">Bills</option>
+
+                            <option value="Health">Health</option>
+
+                            <option value="Other">Other</option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Date -->
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Date
+                        </label>
+
+                        <input type="date" name="date" class="form-control modern-input" required>
+
+                    </div>
+
+                    <!-- Button -->
+
+                    <div class="col-12 text-end">
+
+                        <button type="submit" class="add-btn">
+
+                            <i class="bi bi-plus-circle me-2"></i>
+
+                            Add Expense
+
+                        </button>
+
+                    </div>
+
                 </div>
 
             </form>
 
-            <br>
+        </div>
+        <!-- End Main Card -->
+
+        <!-- ================= SEARCH CARD ================= -->
+
+        <div class="search-card mt-4">
 
             <form method="GET">
-                <select name="month">
 
-                    <option value="1">January</option>
-                    <option value="2">February</option>
-                    <option value="3">March</option>
-                    <option value="4">April</option>
-                    <option value="5">May</option>
-                    <option value="6">June</option>
-                    <option value="7">July</option>
-                    <option value="8">August</option>
-                    <option value="9">September</option>
-                    <option value="10">October</option>
-                    <option value="11">November</option>
-                    <option value="12">December</option>
+                <div class="row g-3 align-items-end">
 
-                </select>
+                    <!-- Month -->
 
-                <select name="year">
+                    <div class="col-md-3">
 
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
-                    <option value="2028">2028</option>
-                    <option value="2029">2029</option>
-                    <option value="2030">2030</option>
-                    <option value="2031">2031</option>
-                    <option value="2032">2032</option>
-                    <option value="2033">2033</option>
-                    <option value="2034">2034</option>
-                    <option value="2035">2035</option>
+                        <label class="form-label">
+                            Month
+                        </label>
 
-                </select>
+                        <select name="month" class="form-select modern-input">
 
-                <button type="submit">
-                    Filter
-                </button>
+                            <option value="">All Months</option>
+
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- Year -->
+
+                    <div class="col-md-3">
+
+                        <label class="form-label">
+                            Year
+                        </label>
+
+                        <select name="year" class="form-select modern-input">
+
+                            <option value="">All Years</option>
+
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                            <option value="2031">2031</option>
+
+
+                        </select>
+
+                    </div>
+
+                    <!-- Search -->
+
+                    <div class="col-md-4">
+
+                        <label class="form-label">
+                            Search
+                        </label>
+
+                        <input type="search" name="search" class="form-control modern-input"
+                            placeholder="Search expense...">
+
+                    </div>
+
+                    <!-- Apply -->
+
+                    <div class="col-md-2 d-grid">
+
+                        <button type="submit" class="apply-btn">
+
+                            Apply
+
+                        </button>
+
+                    </div>
+
+                </div>
+
             </form>
 
-            <br>
-
-            <form method="GET" class="d-flex gap-2">
-
-                <input type="search" name="search" class="form-control" placeholder="Search Expenses">
-
-                <button type="submit" class="btn btn-primary">
-                    Search
-                </button>
-
-            </form>
-
-            <br>
-
-            <table class="table table-striped mt-4">
-
-                <thead>
-
-                    <tr>
-                        <th>Title</th>
-                        <th>Amount</th>
-                        <th>Category</th>
-                        <th>Date</th>
-                        <th>Actions</th>
-                    </tr>
-
-                </thead>
-
-                <tbody>
-                    {% for expense in Expenses %}
-
-                    <tr>
-                        <td>{{ expense.title }}</td>
-                        <td>&#8377 {{ expense.amount }}</td>
-                        <td>{{ expense.category }}</td>
-                        <td>{{ expense.date}}</td>
-
-                        <td>
-                            <a href="/edit_expense/{{ expense.id }}" class="btn btn-warning btn-sm">
-                                Update
-                            </a>
-
-                            <a href="/delete/{{ expense.id }}" class="btn btn-danger btn-sm">
-                                Delete
-                            </a>
-                        </td>
-                    </tr>
-
-                    {% endfor %}
-                </tbody>
-            </table>
         </div>
-    </div>
 
+        <!-- ================= Monthly Expense Trend ================= -->
+
+        <div class="dashboard-card chart-card mt-4">
+
+            <div class="chart-layout">
+
+                <!-- Left Side -->
+
+                <div class="chart-info">
+
+                    <h2>Monthly Expense Trend</h2>
+
+                    <p>Last 6 months spending overview</p>
+
+                    <div class="chart-total">
+
+                        ₹{{ this_month_total }}
+
+                    </div>
+
+                    <small>This Month</small>
+
+                </div>
+
+                <!-- Right Side -->
+
+                <div class="chart-area">
+
+                    <canvas id="expenseChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================= TABLE CARD ================= -->
+
+        <div class="table-card mt-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <h3 class="section-title mb-0">
+                    Recent Expenses
+                </h3>
+
+                <span class="badge bg-primary">
+
+                    {{ total_transaction }} Transactions
+
+                </span>
+
+            </div>
+
+            <div class="table-responsive">
+
+                <table class="table align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Title</th>
+
+                            <th>Category</th>
+
+                            <th>Amount</th>
+
+                            <th>Date</th>
+
+                            <th class="text-center">Action</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for expense in Expenses %}
+
+                        <tr>
+
+                            <td>
+
+                                <strong>
+
+                                    {{ expense.title }}
+
+                                </strong>
+
+                            </td>
+
+                            <td>
+
+                                <span class="badge bg-secondary">
+
+                                    {{ expense.category }}
+
+                                </span>
+
+                            </td>
+
+                            <td>
+
+                                ₹ {{ expense.amount }}
+
+                            </td>
+
+                            <td>
+
+                                {{ expense.date }}
+
+                            </td>
+
+                            <td class="text-center">
+
+                                <a href="/edit_expense/{{ expense.id }}" class="btn btn-warning btn-sm me-2">
+
+                                    Update
+
+                                </a>
+
+                                <a href="/delete/{{ expense.id }}" class="btn btn-danger btn-sm">
+
+                                    Delete
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="5" class="text-center py-5">
+
+                                <h5 class="text-muted">
+
+                                    No Expenses Found
+
+                                </h5>
+
+                                <p class="text-muted">
+
+                                    Start adding your first expense 🚀
+
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+                <div class="pagination-wrapper">
+
+                    {% if Expenses.has_previous %}
+
+                    <a href="?page=1" class="page-btn">
+                        First
+                    </a>
+
+                    <a href="?page={{ Expenses.previous_page_number }}" class="page-btn">
+                        ← Previous
+                    </a>
+
+                    {% endif %}
+
+                    <span class="page-info">
+
+                        Page {{ Expenses.number }} of {{ Expenses.paginator.num_pages }}
+
+                    </span>
+
+                    {% if Expenses.has_next %}
+
+                    <a href="?page={{ Expenses.next_page_number }}" class="page-btn">
+                        Next →
+                    </a>
+
+                    <a href="?page={{ Expenses.paginator.num_pages }}" class="page-btn">
+                        Last
+                    </a>
+
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- End Container -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const alerts = document.querySelectorAll(".alert");
+
+            alerts.forEach(function (alert) {
+
+                setTimeout(function () {
+
+                    alert.style.transition = "opacity 0.5s ease";
+
+                    alert.style.opacity = "0";
+
+                    setTimeout(function () {
+
+                        alert.remove();
+
+                    }, 500);
+
+                }, 3000);
+
+            });
+
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+
+        const labels = JSON.parse('{{ chart_labels|escapejs }}');
+        const data = JSON.parse('{{ chart_data|escapejs }}');
+
+        const ctx = document.getElementById('expenseChart');
+
+        const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 350);
+
+        gradient.addColorStop(0, 'rgba(124,58,237,.30)');
+        gradient.addColorStop(1, 'rgba(124,58,237,0)');
+
+        new Chart(ctx, {
+
+            type: 'line',
+
+            data: {
+
+                labels: labels,
+
+                datasets: [{
+
+                    data: data,
+
+                    fill: true,
+
+                    backgroundColor: gradient,
+
+                    borderColor: '#7c3aed',
+
+                    borderWidth: 4,
+
+                    tension: .45,
+
+                    pointRadius: 6,
+
+                    pointHoverRadius: 8,
+
+                    pointBackgroundColor: '#7c3aed',
+
+                    pointBorderColor: '#fff',
+
+                    pointBorderWidth: 3
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    },
+
+                    tooltip: {
+
+                        backgroundColor: '#fff',
+
+                        titleColor: '#111827',
+
+                        bodyColor: '#374151',
+
+                        borderColor: '#e5e7eb',
+
+                        borderWidth: 1,
+
+                        displayColors: false,
+
+                        padding: 12
+
+                    }
+
+                },
+
+                scales: {
+
+                    x: {
+
+                        grid: {
+                            display: false
+                        },
+
+                        ticks: {
+                            color: '#64748b'
+                        }
+
+                    },
+
+                    y: {
+
+                        grid: {
+                            color: 'rgba(148,163,184,.12)'
+                        },
+
+                        ticks: {
+                            color: '#64748b'
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    </script>
+
+    <script>
+        const profileBtn = document.getElementById('profileBtn');
+
+        const profileMenu = document.getElementById('profileMenu');
+
+        profileBtn.addEventListener('click', function (e) {
+
+            e.stopPropagation();
+
+            profileMenu.classList.toggle('show');
+        });
+        document.addEventListener('click', function () {
+
+            profileMenu.classList.remove('show');
+        });
+
+    </script>
 </body>
 
 </html>
